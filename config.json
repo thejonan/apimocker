@@ -118,6 +118,16 @@
         "mockFile": "users.json",
         "forceFirstObject": false
       }
+    },
+    "raw": {
+      "mockBody": "{ \"text\" : \"Good Job!\" }",
+      "verbs": ["all"]
+    },
+    "raw/template/:message": {
+      "mockBody": "{ \"text\" : \"@message\" }",
+      "enableTemplate" : true,
+      "contentType": "application/json",
+      "verbs": ["get"]
     }
   }
 }

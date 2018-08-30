@@ -101,6 +101,11 @@ describe('Functional tests using an http client to test "end-to-end": ', functio
 				verifyResponseBody(reqOptions, null, {'king': 'greg'}, done);
 			});
 
+			it('Returns correct body data', function(done){
+				var reqOptions = httpReqOptions('/raw');
+				verifyResponseBody(reqOptions, null, { "text" : "Good Job!" }, done);
+			});
+
 			it('returns correct data for basic post request', function(done) {
 				var reqOptions = httpReqOptions('/nested/ace');
 				reqOptions.method = 'POST';
@@ -121,6 +126,11 @@ describe('Functional tests using an http client to test "end-to-end": ', functio
 			it('Returns data in template from the route', function(done){
 				var reqOptions = httpReqOptions('/template/john/4');
 				verifyResponseBody(reqOptions, null, {'name':'john', 'number':4}, done);
+			});
+
+			it('Returns templated body data from the route', function(done){
+				var reqOptions = httpReqOptions('/raw/template/Abracadarba');
+				verifyResponseBody(reqOptions, null, {'text':'Abracadarba'}, done);
 			});
 
 			it('returns correct data for get to templateSwitch substituting GET params into mockFile ', function(done) {

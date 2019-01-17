@@ -159,15 +159,13 @@
       "mockFile": "upload-form.html",
       "contentType": "text/html"
     },
-    "raw": {
-      "mockBody": "{ \"text\" : \"Good Job!\" }",
-      "verbs": ["all"]
-    },
-    "raw/template/:message": {
-      "mockBody": "{ \"text\" : \"@message\" }",
-      "enableTemplate" : true,
-      "contentType": "application/json",
-      "verbs": ["get"]
+    "body/filter": {
+      "verbs": ["post"],
+      "bodies": [
+        "{ \"text\": \"Raw body filter test\" }",
+        { "sha1": "46607ed90dbc35ffa40bf49db6e341e92487f2bc" }
+      ],
+      "mockFile": "king.json"
     }
   }
 }

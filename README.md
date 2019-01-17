@@ -29,6 +29,13 @@ It's not a good idea to keep them under the "node_modules" directory.
 Make sure another process is not already using the port you want.
 If you want port 80, you may need to use "sudo" on Mac OSX.
 
+### Windows note
+After installing from npm, you may need to edit this file:
+        /Users/xxxxx/AppData/Roaming/npm/node_modules/apimocker/config.json
+Change the "mockDirectory" to point to this location.
+(Or another location where you put the mock responses.)
+        mockDirectory: /Users/xxxxx/AppData/Roaming/npm/node_modules/apimocker/samplemocks
+
 ### Proxy
 Sometimes you only want some service endpoints to be mocked, but have other requests forwarded to real service endpoints.
 In this case, provide the proxy URL option on startup e.g.
@@ -38,7 +45,7 @@ When the proxy option is set, any requests to apimocker with URLs that are not c
 A proxy intercept function can be specified to modify responses, using the proxy intercept option (`apimocker --proxy http://myrealservice.io` --intercept config/proxyResponseCustomizer`). The value of the option should be the path, relative to the current working directory, to a module that exports an intercept function as documented in the [express-http-proxy docs](https://github.com/villadora/express-http-proxy#intercept).
 
 ### Uploads
-There is a simple support of `multipart` form data upload process of a single or multiple files. A global option `uploadRoot` determines where the files will be saved, after successfull upload, and another option - `useUploadFieldname` tells apimocker (actually - [multer](https://github.com/expressjs/multer)) whether to use the name original filename found in the request (default), or the name of the field. Although, the latter may sound strange, it can make certain testing procedure simpler.
+There is a simple support of `multipart` form data upload process of a single or multiple files. A global option `uploadRoot` determines where the files will be saved after successful upload, and another option - `useUploadFieldname` tells apimocker (actually - [multer](https://github.com/expressjs/multer)) whether to save the uploaded file with the original filename found in the request (default), or the name of the field. Although the latter may sound strange, it can make certain testing procedure simpler.
 
 ### With Grunt or Gulp
 If you're using Grunt for your project, there's a grunt plugin you can use to start up apimocker:
@@ -46,13 +53,6 @@ https://github.com/gstroup/grunt-apimocker
 
 For Gulp, there's also a plugin contributed by kent-wu:
 https://github.com/kent-wu/gulp-apimocker
-
-### Windows note
-After installing from npm, you'll need to edit this file:
-        /Users/xxxxx/AppData/Roaming/npm/node_modules/apimocker/config.json
-Change the "mockDirectory" to point to this location.
-(Or another location where you put the mock responses.)
-        mockDirectory: /Users/xxxxx/AppData/Roaming/npm/node_modules/apimocker/samplemocks
 
 ### Running in Cloud Foundry
 You can deploy apimocker into a cloud foundry instance by running `cf push`.  The port you specify will be ignored, and you'll use the standard port 80 to access apimocker.  When specifying your mockDirectory, you will need to use a relative path, like "samplemocks/".  At this time, you'll need to do another build and push whenever you change a mock file.
@@ -65,6 +65,7 @@ On startup, config values are loaded from the config.json file.
 During runtime, mock services can be configured on the fly.
 See the sample config.json file in this package.
 
+* Config files can be either `.json` format, or in `.js`. When using `.js`, the module should export a config object, or a function that returns a config object.
 * Services can be configured to return different responses, depending on a request parameter or request header.
 * Content-type for a service response can be set for each service.  If not set, content-type defaults to application/xml for .xml files, and application/json for .json files.
 * HTTP Status code can be set for each service.
@@ -480,7 +481,7 @@ If the config.json file is edited, you can send an http request to /admin/reload
 See version history here: [HISTORY.md](HISTORY.md)
 
 ## Contributors
-Run "grunt watch" in the root "apimocker" directory to start the grunt watch task.  This will run JSHint and mocha tests.
+Run "grunt watch" in the root "apimocker" directory to start the grunt watch task.  This will run eslint and mocha tests.
 All Pull Requests must include at least one test.
 
 ## Acknowledgements
